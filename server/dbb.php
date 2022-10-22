@@ -1,8 +1,8 @@
 <?php
-    class Broker{
+    class broker{
         private $mysqli;
-        public function _construct($host,$username,$pass,$db) {
-            $this->mysqli=new mysqli($host,$username,$pass,$db)
+        public function __construct($host,$username,$pass,$db) {
+            $this->mysqli=new mysqli($host,$username,$pass,$db);
             $this->mysqli->set_charset("utf8");
         }
         public function ucitaj($upit) {

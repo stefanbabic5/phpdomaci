@@ -40,6 +40,6 @@ CREATE TABLE `raspored` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 insert into `raspored`(`id`,`predstava_id`,`scena_id`,`cena`,`datum`) values
-(1,1,1,2000,'2022-11-15 20:00:00'),
-(2,1,2,1000,'2023-01-10 21:00:00'),
-(3,2,2,850,'2022-12-01 18:00:00');
+(1,1,1,2000.00,'2022-11-15 20:00:00'),
+(2,1,2,1000.00,'2023-01-10 21:00:00'),
+(3,2,2,850.00,'2022-12-01 18:00:00');
