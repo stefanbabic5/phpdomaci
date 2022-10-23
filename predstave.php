@@ -29,7 +29,7 @@
                 <label>Trajanje</label>
                 <input class="form-control" type="number" min='0' id='trajanje'>
                 <label>Ocena</label>
-                <input class="form-control" type="number" min='0' max='10' id='ocena'>
+                <input class="form-control" type="number" min='0' step="any" max='10' id='ocena'>
                 <button id='sacuvaj' class="btn btn-primary form-control mt-2">Kreiraj</button>
             </form>
             <button id='obrisi' class="btn btn-danger mt-2 form-control" hidden>Obrisi</button>
@@ -38,6 +38,85 @@
     </div>
 </div>
 <script>
-
+    let predstave = [];
+    let detaljiID = 0;
+    $(document).ready(function () {
+        ucitajPredstave();
+        $("#obrisi").click(function() {
+            obrisiPredstavu();
+            otvori(0);
+        })
+        $("#nazad").click(function() {
+            otvori(0);
+        })
+        $("#forma").submit(function(e) {
+            e.preventDefault();
+            const naziv = $("#naziv").val();
+            const trajanje = $("#trajanje").val();
+            const ocena = $("#ocena").val();
+            $.post("./server/index.php?akcija=predstava."+(detaljiID ? "update" : "create"), {
+                naziv,
+                ocena,
+                trajanje,
+                id: detaljiID
+            }, function(res){
+                res=JSON.parse(res);
+                if(!res.status){
+                    alert(res.error);
+                }
+                ucitajPredstave();
+                otvori(0);
+            })
+        })
+    })
+    function obrisiPredstavu() {
+        $.post("./server/index.php?akcije=predstava.delete", {id:detaljiID}, function(res) {
+            res=JSON.parse(res);
+            if(!res.status){
+                alert(res.error);
+            }
+            ucitajPredstave();
+        })
+    }
+    function ucitajPredstave() {
+        $.getJSON("./server/index.php?akcije=predstava.read", function(res) {
+            if(!res.status){
+                alert(res.error);
+                return;
+            }
+            $("#predstave").html('');
+            predstave=res.data;
+            for (let predstava of predstave) {
+                $("#predstave").append(`
+                <tr>
+                    <td>${predstava.id}</td>
+                    <td>${predstava.naziv}</td>
+                    <td>${predstava.trajanje}</td>
+                    <td>${predstava.ocena}</td>
+                    <td><button onClick="otvori(${predstava.id})" class="btn btn-secondary width-100">Detalji</button></td>
+                </tr>
+                `)
+            }
+        })
+    }
+    function otvori(id) {
+        detaljiID = id;
+        const predstava = predstave.find(e => e.id==id);
+        if (!predstava) {
+            $("#naziv").val('');
+            $("#trajanje").val('');
+            $("#ocena").val('');
+            $("#nazad").attr('hidden',true);
+            $("#obrisi").attr('hidden',true);
+            $("#sacuvaj").html("Kreiraj");
+        } else {
+            $("#naziv").val(predstava.naziv);
+            $("#trajanje").val(predstava.trajanje);
+            $("#ocena").val(predstava.ocena);
+            $("#nazad").attr('hidden',false);
+            $("#obrisi").attr('hidden',false);
+            $("#sacuvaj").html("Izmeni");
+        }
+    }
 </script>
 </body>
