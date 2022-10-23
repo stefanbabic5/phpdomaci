@@ -19,7 +19,7 @@ class rasporedServis{
                     "ocena"=>doubleval($element->ocena)
                 ],
                 "scena"=>[
-                    "id"=>intval($element->scena),
+                    "id"=>intval($element->scena_id),
                     "naziv"=>$element->naziv_scene
                 ]
             ];

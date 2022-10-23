@@ -86,7 +86,7 @@
                 if($metoda!="POST"){
                     throw new Exception("Akcija se moze pozvati samo sa POST metodom!");
                 }
-                $this->rasporedServis->delete($_POST("id"));
+                $this->rasporedServis->delete($_POST["id"]);
                 return null;
             }
             throw new Exception("Akcija nije podrzana!");

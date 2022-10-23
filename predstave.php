@@ -70,7 +70,7 @@
         })
     })
     function obrisiPredstavu() {
-        $.post("./server/index.php?akcije=predstava.delete", {id:detaljiID}, function(res) {
+        $.post("./server/index.php?akcija=predstava.delete", {id:detaljiID}, function(res) {
             res=JSON.parse(res);
             if(!res.status){
                 alert(res.error);
@@ -79,7 +79,7 @@
         })
     }
     function ucitajPredstave() {
-        $.getJSON("./server/index.php?akcije=predstava.read", function(res) {
+        $.getJSON("./server/index.php?akcija=predstava.read", function(res) {
             if(!res.status){
                 alert(res.error);
                 return;

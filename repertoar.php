@@ -48,7 +48,7 @@
             const datum=$("#datum").val();
             const predstava=$("#predstava").val();
             const scena=$("#scena").val();
-            $.post("./server/index.php?akcija=raspored.create",{
+            $.post("./server/index.php?akcija=raspored.create", {
                 predstavaID: predstava,
                 scenaID: scena,
                 datum,
@@ -67,9 +67,7 @@
                 return;
             }
             for (let predstava of res.data) {
-                $("#predstava").append(`
-                <option value="${predstava.id}">${predstava.naziv}</option>
-                `)
+                $("#predstava").append(`<option value="${predstava.id}">${predstava.naziv}</option>`);
             }
         })
         $.getJSON("./server/index.php?akcija=scena.read",function (res){
@@ -79,8 +77,7 @@
             }
             for(let scena of res.data) {
                 $("#scena").append(`
-                <option value="${scena.id}">${scena.naziv}</option>
-                `)
+<option value="${scena.id}">${scena.naziv}</option>`)
             }
         })
     })
@@ -111,11 +108,12 @@
                 </tr>
             `)
         }
-    }
+    };
+    
     function obrisi(id) {
-        $.post("./server/index.php?akcija=raspored.delete",{id},function(res) {
-            res=JSON.parse(res);
-            if(!res.status){
+        $.post('./server/index.php?akcija=raspored.delete', { id }, function (res) {
+            res = JSON.parse(res);
+            if (!res.status) {
                 alert(res.error);
             }
             ucitajRaspored();
