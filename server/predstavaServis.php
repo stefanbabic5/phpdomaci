@@ -15,7 +15,8 @@ class predstavaServis{
         $this->broker->upisi("update predstava set naziv='".$naziv."',trajanje=".$trajanje.",ocena=".$ocena." where id=".$id);
     }
     public function delete($id) {
-        $this->broker->upisi("delete from predstava where id=".$id);
+        try{$this->broker->upisi("delete from predstava where id=".$id);}
+        catch(Exception $e) {throw new Exception("Ne moze se obrisati predstava dok postoji termin za nju!");}
     }
 }
 ?>
